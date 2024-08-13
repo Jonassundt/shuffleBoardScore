@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elo Ranking System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .elo-positive {
+            color: green;
+            font-weight: bold;
+        }
+        .elo-negative {
+            color: red;
+            font-weight: bold;
+        }
+        .match-history li {
+            display: flex;
+            justify-content: space-between;
+            font-family: monospace;
+        }
+        .match-history .elo-result {
+            min-width: 60px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="section" id="player-ratings">
+            <h1><i>Enlink Shuffleboard Ratings</i></h1>
+            <ul>
+                {% for player in players %}
+                <li>{{ player.name }}: {{ player.rating }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section" id="elo-chart">
+            <img src="data:image/png;base64,{{ elo_chart }}" alt="ELO Chart">
+        </div>
+
+        <div class="section" id="add-match">
+            <form action="/add_match" method="post" onsubmit="return validateForm(); resetDropdowns();">
+                <label for="player1">Player 1:</label>
+                <select name="player1" id="player1" onchange="updatePlayer2Options()">
+                    <option value="select">Select Player</option>
+                    {% for player in players %}
+                    <option value="{{ player.name }}">{{ player.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="player2">Player 2:</label>
+                <select name="player2" id="player2" onchange="updateWinnerOptions()">
+                    <option value="select">Select Player</option>
+                    {% for player in players %}
+                    <option value="{{ player.name }}">{{ player.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="winner">Winner:</label>
+                <select name="winner" id="winner">
+                    <option value="select">Select Winner</option>
+                </select>
+
+                <button type="submit">Add Match</button>
+            </form>
+        </div>
+
+        <div class="section" id="match-history">
+            <h2>Match History</h2>
+            <ul class="match-history">
+                {% for match in matches %}
+                <li>
+                    <span>{{ match.player1.name }} &nbsp; vs &nbsp; {{ match.player2.name }}</span>
+                    <span class="elo-result {% if match.winner == match.player1 %}elo-positive{% else %}elo-negative{% endif %}">
+                        {% if match.winner == match.player1 %}
+                            (+{{ match.elo_change_winner }})
+                        {% else %}
+                            ({{ match.elo_change_loser }})
+                        {% endif %}
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function updatePlayer2Options() {
+            var player1 = document.getElementById("player1").value;
+            var player2Dropdown = document.getElementById("player2");
+
+            for (var i = 0; i < player2Dropdown.options.length; i++) {
+                if (player2Dropdown.options[i].value === player1) {
+                    player2Dropdown.options[i].disabled = true;
+                    player2Dropdown.options[i].selected = false;  // Deselect if it was selected
+                } else {
+                    player2Dropdown.options[i].disabled = false;
+                }
+            }
+
+            updateWinnerOptions();
+        }
+
+        function updateWinnerOptions() {
+            var player1 = document.getElementById("player1").value;
+            var player2 = document.getElementById("player2").value;
+            var winnerDropdown = document.getElementById("winner");
+
+            winnerDropdown.innerHTML = "";
+
+            if (player1 !== player2) {
+                var option1 = document.createElement("option");
+                option1.value = player1;
+                option1.text = player1;
+                winnerDropdown.add(option1);
+
+                var option2 = document.createElement("option");
+                option2.value = player2;
+                option2.text = player2;
+                winnerDropdown.add(option2);
+            }
+        }
+
+        function validateForm() {
+            var player1 = document.getElementById("player1").value;
+            var player2 = document.getElementById("player2").value;
+            var winner = document.getElementById("winner").value;
+
+            if (player1 === "select" || player2 === "select" || winner === "select") {
+                alert("Please select both players and a winner before adding a match.");
+                return false;
+            }
+
+            return true;
+        }
+
+        function resetDropdowns() {
+            document.getElementById("player1").value = "select";
+            document.getElementById("player2").value = "select";
+            document.getElementById("winner").innerHTML = "<option value='select'>Select Winner</option>";
+        }
+
+        updatePlayer2Options();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* Dark gradient background */
+    margin: 0;
+    padding: 20px; /* Add padding to ensure margin on top */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Keep min-height for better responsiveness */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+    color: #ffffff; /* Set default text color to white */
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Darker shadow for contrast */
+    width: 95%; /* Adjusted width to reduce side margins on mobile */
+    max-width: 600px;
+    text-align: center;
+    box-sizing: border-box;
+    margin: 20px 0; /* Add top and bottom margins for spacing */
+}
+
+h1, h2 {
+    color: #ffffff;
+    font-size: 1.5em; /* Adjusted font size for better scaling */
+    font-weight: 400; /* Lighter font weight for a modern look */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    background-color: rgba(255, 255, 255, 0.2); /* Slightly transparent background */
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: left;
+    font-size: 1em; /* Ensure text size is readable on mobile */
+    color: #e0e0e0; /* Light gray text color */
+}
+
+form {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    gap: 10px; /* Add space between elements */
+    align-items: center; /* Center elements horizontally */
+}
+
+label {
+    margin-right: 10px;
+    font-size: 1em;
+    width: 100%; /* Ensure labels take full width */
+    text-align: left; /* Align text to the left */
+    color: #b3b3b3; /* Lighter text color for labels */
+}
+
+select, button {
+    margin-right: 0; /* Remove right margin */
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #3c3c3c; /* Darker border for better contrast */
+    font-size: 1em;
+    width: 100%; /* Full width for select and button elements */
+    max-width: none; /* Remove max-width constraint */
+    box-sizing: border-box;
+    background-color: #2e2e2e; /* Dark background for input fields */
+    color: #ffffff; /* White text for input fields */
+}
+
+button {
+    margin-top: 10px;
+    padding: 12px 15px; /* Increase padding for a larger button */
+    background-color: #007bff; /* Blue button color */
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1.1em; /* Increase font size for better readability */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+a {
+    color: #007bff; /* Link color */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.elo-positive {
+    color: rgb(55, 255, 55);
+    font-weight: bold;
+}
+.elo-negative {
+    color: rgb(253, 88, 88);
+    font-weight: bold;
+}
+
+
+.match-history {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.match-history li {
+    padding: 8px;
+    font-family: monospace; /* Optional: Gives a fixed-width font appearance similar to tabbed text */
+}
+
+.match-history li span {
+    display: inline-block;
+    min-width: 80px; /* Adjust this value based on your preference */
+}
+
+#elo-chart img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;  /* Ensures the chart does not overflow */
+    border-radius: 4px; /* Add a slight border-radius to match other elements */
+}
+
+/* Media query for small devices */
+@media (max-width: 600px) {
+    h1, h2 {
+        font-size: 1.25em;
+    }
+
+    label, select, button {
+        font-size: 1em; /* Adjust font size for better readability */
+        margin-right: 0; /* Ensure no margin on mobile */
+    }
+
+    li {
+        font-size: 0.95em; /* Slightly increase the font size for better readability */
+    }
+
+    form {
+        gap: 10px; /* Adjust gap for better spacing */
+    }
+
+    .container {
+        padding: 15px; /* Reduce padding slightly for mobile view */
+        margin: 20px 0; /* Ensure margin on top and bottom */
+    }
+
+    button {
+        padding: 14px 18px; /* Further increase padding for mobile */
+        font-size: 1.2em; /* Increase font size for the button */
+    }
+}
